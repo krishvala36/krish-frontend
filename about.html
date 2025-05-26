@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>About - My Website</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Overall page background */
+    body {
+      background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    /* Main content style */
+    main {
+      max-width: 800px;
+      margin: 30px auto;
+      padding: 20px 30px;
+      border-radius: 8px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+    }
+
+    main h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #204080;
+      margin-bottom: 18px;
+      padding: 10px 18px;
+      border-radius: 6px;
+      background: linear-gradient(90deg, #acc8ff 0%, #5982ff 100%);
+      box-shadow: 0 2px 6px rgba(89,130,255,0.6);
+      text-align: left;
+      letter-spacing: 0.03em;
+      color: white;
+    }
+
+    main ul {
+      list-style-type: none;
+      padding-left: 0;
+      margin-bottom: 25px;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: #555;
+    }
+
+    main ul li {
+      margin-bottom: 6px;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    /* Custom bullet */
+    main ul li::before {
+      content: "•";
+      color: #4A90E2;
+      font-weight: bold;
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    /* For timeline style (year and description) */
+    .timeline-item {
+      margin-bottom: 12px;
+    }
+    .timeline-item strong {
+      color: #4A90E2;
+      display: block;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    /* For each section's content container, add unique background */
+
+/* My Skills */
+.skills-section {
+  background: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=60') no-repeat center center/cover;
+  padding: 15px 20px;
+  border-radius: 6px;
+  margin-bottom: 30px;
+  color: #FFFFCC;
+}
+
+/* My Coding Journey */
+.coding-journey-section {
+  background: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=60') no-repeat center center/cover;
+  padding: 15px 20px;
+  border-radius: 6px;
+  margin-bottom: 30px;
+  color:  #FFFFFF;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Core Values */
+.core-values-section {
+  background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=60') no-repeat center center/cover;
+  padding: 15px 20px;
+  border-radius: 6px;
+  margin-bottom: 30px;
+  color: #4B0082;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7);
+}
+
+/* Favorite Tools & Technologies */
+.tools-section {
+  background: url('https://images.unsplash.com/photo-1517433456452-f9633a875f6f?auto=format&fit=crop&w=800&q=60') no-repeat center center/cover;
+  padding: 15px 20px;
+  border-radius: 6px;
+  margin-bottom: 30px;
+  color: #2C3E50;
+   text-shadow: 0.5px 0.5px 1px rgba(255, 255, 255, 0.6);
+}
+
+/* About Me */
+.about-me-section {
+  background: url('https://images.unsplash.com/photo-1603791440384-56cd371ee9a7?auto=format&fit=crop&w=1000&q=80') no-repeat center center/cover;
+  padding: 15px 20px;
+  border-radius: 6px;
+  margin-bottom: 30px;
+  color: #2B2B2B;
+  text-shadow: 0.5px 0.5px 1px rgba(255, 255, 255, 0.5);
+}
+ 
+  </style>
+</head>
+<body>
+  <header>
+    <h1>About Us</h1>
+    <nav>
+      <a href="index.html"> 🏠  Home</a>
+      <a href="about.html"> ℹ️  About</a>
+      <a href="contact.html"> 📞  Contact</a>
+      <a href="services.html"> 🛠️  Services</a>
+    </nav>    
+  </header>
+
+  <main>
+    <h2>🎯 My Skills</h2>
+     <ul class="skills-section">
+      <li>HTML & Semantic Markup</li>
+      <li>CSS3 & Responsive Design</li>
+      <li>JavaScript & Modern Frameworks</li>
+      <li>Version Control with Git & GitHub</li>
+      <li>Basic SEO & Performance Optimization</li>
+      <li>Cross-browser Compatibility</li>
+      <li>UI/UX Principles</li>
+    </ul>
+
+    <h2>📜 My Coding Journey</h2>
+    <div class="coding-journey-section">
+      <div class="timeline-item">
+      <strong>2019</strong>
+      <p>Started learning HTML & CSS fundamentals, building simple static websites.</p>
+    </div>
+    <div class="timeline-item">
+      <strong>2020</strong>
+      <p>Expanded knowledge with JavaScript basics and created interactive web pages.</p>
+    </div>`
+    <div class="timeline-item">
+      <strong>2022</strong>
+      <p>Developed real-world projects using frameworks and improved front-end skills.</p>
+    </div>
+    <div class="timeline-item">
+      <strong>2024</strong>
+      <p>Started exploring backend technologies and full-stack development.</p>
+    </div>
+    </div>
+
+    <h2>⭐ Core Values</h2>
+  <ul class="core-values-section">
+    <li>Integrity: Always deliver honest and transparent work.</li>
+    <li>Continuous Learning: Embrace challenges and learn constantly.</li>
+    <li>Collaboration: Believe in teamwork and open communication.</li>
+    <li>Quality: Prioritize clean, maintainable, and efficient code.</li>
+    <li>Innovation: Keep experimenting with new ideas and technologies.</li>
+  </ul>
+
+  <h2>🧰 Favorite Tools & Technologies</h2>
+  <ul class="tools-section">
+    <li>HTML5 & CSS3 - Building blocks of the web</li>
+    <li>Visual Studio Code - My primary code editor</li>
+    <li>Git & GitHub - Version control and collaboration</li>
+    <li>React.js & Vue.js - Modern front-end frameworks</li>
+    <li>Node.js & Express - Backend development</li>
+    <li>Figma & Adobe XD - UI/UX design tools</li>
+  </ul>
+
+    <h2>👤 About Me</h2>
+    <ul class="about-me-section">
+      <li>Passionate web developer dedicated to creating clean, efficient, and accessible websites.</li>
+      <li>Always eager to learn new tools and keep up with industry trends.</li>
+      <li>Committed to writing maintainable and reusable code.</li>
+      <li>Enjoys collaborating with others and sharing knowledge within the community.</li>
+      <li>Believes in balancing aesthetics with functionality to deliver great user experiences.</li>
+      <li>Constantly improving problem-solving and debugging skills.</li>
+    </ul>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 My Website</p>
+  </footer>
+</body>
+</html>

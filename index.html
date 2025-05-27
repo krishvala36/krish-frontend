@@ -166,76 +166,63 @@
   </div>
 
 <script>
-  const API_URL = "https://krish-backend.vercel.app/api/images";
+const API_URL = "https://krish-backend.vercel.app/api/images";
 
-  const showBtn = document.getElementById('showImageInputBtn');
-  const inputSection = document.getElementById('imageInputSection');
-  const addBtn = document.getElementById('addImageBtn');
-  const cancelBtn = document.getElementById('cancelBtn');
-  const imageUrlInput = document.getElementById('imageUrl');
-  const imageContainer = document.getElementById('imageContainer');
-  const imageFilter = document.getElementById('imageFilter');
-  const previewModal = document.getElementById('imagePreviewModal');
-  const previewImage = document.getElementById('previewImage');
-  const closePreview = document.getElementById('closePreview');
+async function loadImages() {
+  try {
+    const response1 = await fetch(API_URL);
+    const images = await response1.json();
+    savedImages = Array.isArray(images) ? images : [];
+    refreshImages();
+  } catch (error) {
+    console.error('Failed to load images', error);
+  }
+}
 
-  let savedImages = [];
+addBtn.addEventListener('click', async () => {
+  const url = imageUrlInput.value.trim();
+  if (!url) {
+    alert('Please enter an image URL');
+    return;
+  }
 
-  async function loadImages() {
-    try {
-      const res = await fetch(API_URL);
-      const images = await res.json();
-      savedImages = Array.isArray(images) ? images : [];
+  try {
+    const response2 = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url })
+    });
+
+    const result = await response2.json();
+    if (response2.ok) {
+      savedImages.push(url);
+      localStorage.setItem('savedImages', JSON.stringify(savedImages));
       refreshImages();
-    } catch (error) {
-      console.error('Failed to load images', error);
+    } else {
+      alert(result.message || 'Failed to add image');
     }
+  } catch (error) {
+    alert('Error adding image. Check internet or server.');
+    console.error(error);
   }
 
-  addBtn.addEventListener('click', async () => {
-    const url = imageUrlInput.value.trim();
-    if (!url) {
-      alert('Please enter an image URL');
-      return;
-    }
+  imageUrlInput.value = '';
+  inputSection.style.display = 'none';
+  showBtn.style.display = 'inline-block';
+});
 
-    try {
-      const res = await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url })
-      });
-
-      const result = await res.json();
-      if (res.ok) {
-        savedImages.push(url);
-        localStorage.setItem('savedImages', JSON.stringify(savedImages));
-        refreshImages();
-      } else {
-        alert(result.message || 'Failed to add image');
-      }
-    } catch (error) {
-      alert('Error adding image. Check internet or server.');
-      console.error(error);
-    }
-
-    imageUrlInput.value = '';
-    inputSection.style.display = 'none';
-    showBtn.style.display = 'inline-block';
-  });
-
-  async function deleteImage(url) {
-    try {
-      await fetch(API_URL, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url })
-      });
-      await loadImages();
-    } catch (error) {
-      console.error('Failed to delete image', error);
-    }
+async function deleteImage(url) {
+  try {
+    await fetch(API_URL, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url })
+    });
+    await loadImages();
+  } catch (error) {
+    console.error('Failed to delete image', error);
   }
+}
 
   function refreshImages() {
     imageContainer.innerHTML = '';

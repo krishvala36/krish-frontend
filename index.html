@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <title>Home - My Website</title>
 <style>
-  body {    
+  body {
     font-family: sans-serif;
     margin: 0;
     padding: 0;
@@ -89,8 +89,8 @@
     cursor: pointer;
     display: block;
     margin-left: auto;
-    margin-right: auto; 
-    }
+    margin-right: auto;
+  }
 
   #imagePreviewModal {
     position: fixed;
@@ -137,14 +137,14 @@
     <h2>Home</h2>
     <p>Different types of content can be added here.</p>
 
-    <label for="imageFilter" style="font-weight: bold;">Filter Images:</label> <br> </p>
+    <label for="imageFilter" style="font-weight: bold;">Filter Images:</label>
     <select id="imageFilter" style="margin-left: 10px; font-size: 16px; padding: 5px;">
       <option value="latest">Latest First</option>
       <option value="oldest">Oldest First</option>
     </select>
 
     <p>➤ Click the button to add an image.</p>
-    <button id="showImageInputBtn" style="font-weight: bold; font-size: 16px;">Add Image</button> <br>
+    <button id="showImageInputBtn" style="font-weight: bold; font-size: 16px;">Add Image</button>
 
     <div id="imageInputSection">
       <input type="text" id="imageUrl" placeholder="Enter image URL here" size="70"/>
@@ -179,69 +179,57 @@
   const previewImage = document.getElementById('previewImage');
   const closePreview = document.getElementById('closePreview');
 
-  // Load images from backend
+  let savedImages = [];
+
   async function loadImages() {
     try {
       const res = await fetch(API_URL);
       const images = await res.json();
-
-      if (!images || images.length === 0) {
-        // agar backend empty hai toh kuch default images dikhao
-        savedImages = [
-          "https://via.placeholder.com/300x200?text=Default+1",
-          "https://via.placeholder.com/300x200?text=Default+2",
-          "https://via.placeholder.com/300x200?text=Default+3"
-        ];
-      } else {
-        savedImages = images;
-      }
+      savedImages = Array.isArray(images) ? images : [];
       refreshImages();
     } catch (error) {
       console.error('Failed to load images', error);
     }
   }
 
-  // Add image to backend
   addBtn.addEventListener('click', async () => {
-  const url = imageUrlInput.value.trim();
-  if (!url) {
-    alert('Please enter an image URL');
-    return;
-  }
-
-  try {
-    const res = await fetch(API_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url })
-    });
-
-    const result = await res.json();
-    if (res.ok) {
-      savedImages.push(url);
-      localStorage.setItem('savedImages', JSON.stringify(savedImages));
-      refreshImages();
-    } else {
-      alert(result.message || 'Failed to add image');
+    const url = imageUrlInput.value.trim();
+    if (!url) {
+      alert('Please enter an image URL');
+      return;
     }
-  } catch (error) {
-    alert('Error adding image. Check internet or server.');
-    console.error(error);
-  }
 
-  imageUrlInput.value = '';
-  inputSection.style.display = 'none';
-  showBtn.style.display = 'inline-block';
-});
+    try {
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url })
+      });
 
+      const result = await res.json();
+      if (res.ok) {
+        savedImages.push(url);
+        localStorage.setItem('savedImages', JSON.stringify(savedImages));
+        refreshImages();
+      } else {
+        alert(result.message || 'Failed to add image');
+      }
+    } catch (error) {
+      alert('Error adding image. Check internet or server.');
+      console.error(error);
+    }
 
-  // Delete image from backend
+    imageUrlInput.value = '';
+    inputSection.style.display = 'none';
+    showBtn.style.display = 'inline-block';
+  });
+
   async function deleteImage(url) {
     try {
       await fetch(API_URL, {
         method: 'DELETE',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({url})
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url })
       });
       await loadImages();
     } catch (error) {
@@ -249,52 +237,12 @@
     }
   }
 
-  let savedImages = [];
-
-  window.onload = () => {
-    loadImages();
-  };
-
-  showBtn.addEventListener('click', () => {
-    inputSection.style.display = 'block';
-    showBtn.style.display = 'none';
-    imageUrlInput.focus();
-  });
-
-  addBtn.addEventListener('click', () => {
-    const url = imageUrlInput.value.trim();
-    if (!url) {
-      alert('Please enter an image URL');
-      return;
-    }
-
-    if (!savedImages.includes(url)) {
-      addImage(url);
-    }
-
-    imageUrlInput.value = '';
-    inputSection.style.display = 'none';
-    showBtn.style.display = 'inline-block';
-  });
-
-  cancelBtn.addEventListener('click', () => {
-    imageUrlInput.value = '';
-    inputSection.style.display = 'none';
-    showBtn.style.display = 'inline-block';
-  });
-
-  imageFilter.addEventListener('change', refreshImages);
-
   function refreshImages() {
     imageContainer.innerHTML = '';
-
     let imagesToShow = [...savedImages];
-    const filter = imageFilter.value;
-
-    if (filter === 'latest') {
-      imagesToShow = [...savedImages].reverse();
+    if (imageFilter.value === 'latest') {
+      imagesToShow.reverse();
     }
-
     imagesToShow.forEach(url => addImageToDOM(url));
   }
 
@@ -323,6 +271,20 @@
     imageContainer.appendChild(wrapper);
   }
 
+  showBtn.addEventListener('click', () => {
+    inputSection.style.display = 'block';
+    showBtn.style.display = 'none';
+    imageUrlInput.focus();
+  });
+
+  cancelBtn.addEventListener('click', () => {
+    imageUrlInput.value = '';
+    inputSection.style.display = 'none';
+    showBtn.style.display = 'inline-block';
+  });
+
+  imageFilter.addEventListener('change', refreshImages);
+
   closePreview.addEventListener('click', () => {
     previewModal.style.display = 'none';
     previewImage.src = '';
@@ -334,6 +296,8 @@
       previewImage.src = '';
     }
   });
+
+  window.onload = loadImages;
 </script>
 </body>
 </html>

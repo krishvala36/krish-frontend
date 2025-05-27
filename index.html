@@ -202,18 +202,38 @@
   }
 
   // Add image to backend
-  async function addImage(url) {
-    try {
-      await fetch(API_URL, {
-        method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({url})
-      });
-      await loadImages();
-    } catch (error) {
-      console.error('Failed to add image', error);
-    }
+  addBtn.addEventListener('click', async () => {
+  const url = imageUrlInput.value.trim();
+  if (!url) {
+    alert('Please enter an image URL');
+    return;
   }
+
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url })
+    });
+
+    const result = await res.json();
+    if (res.ok) {
+      savedImages.push(url);
+      localStorage.setItem('savedImages', JSON.stringify(savedImages));
+      refreshImages();
+    } else {
+      alert(result.message || 'Failed to add image');
+    }
+  } catch (error) {
+    alert('Error adding image. Check internet or server.');
+    console.error(error);
+  }
+
+  imageUrlInput.value = '';
+  inputSection.style.display = 'none';
+  showBtn.style.display = 'inline-block';
+});
+
 
   // Delete image from backend
   async function deleteImage(url) {

@@ -168,6 +168,18 @@
 <script>
 const API_URL = "https://krish-backend.vercel.app/api/images";
 
+  const showBtn = document.getElementById('showImageInputBtn');
+  const inputSection = document.getElementById('imageInputSection');
+  const addBtn = document.getElementById('addImageBtn');
+  const cancelBtn = document.getElementById('cancelBtn');
+  const imageUrlInput = document.getElementById('imageUrl');
+  const imageContainer = document.getElementById('imageContainer');
+  const imageFilter = document.getElementById('imageFilter');
+  const previewModal = document.getElementById('imagePreviewModal');
+  const previewImage = document.getElementById('previewImage');
+  const closePreview = document.getElementById('closePreview');
+ 
+  
 async function loadImages() {
   try {
     const response1 = await fetch(API_URL);
